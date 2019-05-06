@@ -153,18 +153,17 @@ Function DisableServices {
 #Boxstarter and chocolatey config and install
 Function Chocobox {
     Write-Verbose "Installing boxstarter"
+    #download and install boxstarter
     . { iwr -useb https://boxstarter.org/bootstrapper.ps1 } | iex; Get-Boxstarter -Force
-    
+    #Import boxstarter modules
     Import-Module Boxstarter.Chocolatey
-    
+    #Sets timezone
     Set-TimeZone "Eastern Standard Time"    
     
     Write-Verbose "Trust PSGallery"
-    
     Get-PackageProvider -Name NuGet -ForceBootstrap
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
-    
     Write-Verbose "Configure Windows: Explorer Options"
     Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions -EnableShowFullPathInTitleBar -EnableOpenFileExplorerToQuickAccess
     
@@ -172,7 +171,7 @@ Function Chocobox {
     Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -AlwaysShowIconsOn
     
     Write-Verbose "Install software with chocolatey"
-    choco upgrade sysinternals screentogif vscode markdownmonster googlechrome x64dbg cmder CyberChef Hashcheck namp PEview fiddler pester packer winscp processhacker yed shellcodelauncher baretail wireshark lessmsi putty notepadplusplus 7zip -y
+    choco upgrade sysinternals screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
 
     Install-WindowsUpdate -Full
 }   
@@ -180,8 +179,8 @@ Function Chocobox {
 #Registry change functions
 #Load default user hive
 Function loaddefaulthive {
-	$matjazp72 = (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList' Default).Default
-    reg load "$reglocation" $matjazp72\ntuser.dat
+	$defaulthive = (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList' Default).Default
+    reg load "$reglocation" $defaulthive\ntuser.dat
 }
 
 
@@ -549,7 +548,9 @@ Function Goodbye {
 
 
 #Start
-Write-Host "******Configuring Windows 10...******"
+Write-Host "******Elevating script to Configure Windows 10...******"
+if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
+
 Set-ExecutionPolicy unrestricted
 
 If ($AppsOnly) {
