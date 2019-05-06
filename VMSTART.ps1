@@ -172,7 +172,7 @@ Function Chocobox {
     Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -AlwaysShowIconsOn
     
     Write-Verbose "Install software with chocolatey"
-    choco upgrade sysinternals screentogif vscode markdownmonster googlechrome cmder fiddler pester packer winscp baretail wireshark lessmsi putty notepadplusplus -y
+    choco upgrade sysinternals screentogif vscode markdownmonster googlechrome x64dbg cmder CyberChef Hashcheck namp PEview fiddler pester packer winscp processhacker yed shellcodelauncher baretail wireshark lessmsi putty notepadplusplus 7zip -y
 
     Install-WindowsUpdate -Full
 }   
@@ -550,7 +550,6 @@ Function Goodbye {
 
 #Start
 Write-Host "******Configuring Windows 10...******"
-$Creds = Get-Credential
 Set-ExecutionPolicy unrestricted
 
 If ($AppsOnly) {
