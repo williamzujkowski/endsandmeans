@@ -563,7 +563,8 @@ Function ClearStartMenu {
 Function Goodbye {
     Write-Host "*******Configuration complete.*******"
 	Write-Host "*******Remember to set your execution policy back!  Set-Executionpolicy restricted is the Windows 10 default.*******"
-    Write-Host "*******Reboot your computer now!*******"     
+    Write-Host "*******Rebooting your computer now!*******"     
+    shutdown /r /t 1
 }
 
 #---End of functions---
