@@ -91,6 +91,23 @@ $StartLayoutStr = @"
 #Appx removal
 #Removes all apps or some apps depending on switches used.
 
+Function PowerSettings {
+	# Disables power saving, hibernation, and sets hard drive to never shut off
+	#	Set's power profile to maximum
+	powercfg -SETACTIVE SCHEME_MIN
+	#	Hard drive settings on Battery: 
+	powercfg /SETDCVALUEINDEX SCHEME_CURRENT 0012ee47-9041-4b5d-9b77-535fba8b1442 6738e2c4-e8a5-4a42-b16a-e040e769756e 1200
+	#	Hard drive settings while plugged in: 
+	powercfg /SETACVALUEINDEX SCHEME_CURRENT 0012ee47-9041-4b5d-9b77-535fba8b1442 6738e2c4-e8a5-4a42-b16a-e040e769756e 0
+	# Additional settings while on AC:
+	powercfg -change -monitor-timeout-ac 0
+	powercfg -change -standby-timeout-ac 0
+	powercfg -change -hibernate-timeout-ac 0
+	
+	#	Disable hibernate
+	powercfg /hibernate off
+
+}
 Function RemoveApps {
 	$SafeApps = "sechealth|secureas|desktopappinstaller|net.native|vclibs|oobenet|xaml"
 	If ($Xbox) {
@@ -564,7 +581,8 @@ If ($AppsOnly) {
     ClearStartMenu
     Goodbye
 }Else {
-    RemoveApps
+	PowerSettings
+	RemoveApps
     DisableTasks
     DisableServices
     RegChange
