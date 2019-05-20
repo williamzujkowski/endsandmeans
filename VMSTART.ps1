@@ -190,7 +190,10 @@ Function Chocobox {
     Write-Verbose "Install software with chocolatey"
     choco upgrade sysinternals screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
 
-    Install-WindowsUpdate -Full
+	#	Installs Windows updates
+	Install-WindowsUpdate -Full
+	#	Clean up previous windows installs and any temp files
+	.\cleanmgr.exe /d c /VERYLOWDISK /AUTOCLEAN
 }   
     
 #Registry change functions
