@@ -108,8 +108,6 @@ Function PowerSettings {
 	powercfg /hibernate off
 
 }
-
-}
 Function RemoveApps {
 	$SafeApps = "sechealth|secureas|desktopappinstaller|net.native|vclibs|oobenet|xaml"
 	If ($Xbox) {
