@@ -176,7 +176,9 @@ Function Chocobox {
     Import-Module Boxstarter.Chocolatey
     #Sets timezone
     Set-TimeZone "Eastern Standard Time"    
-    
+    # Disables Choco prompt for "yes" -y
+    choco feature enable --name=allowGlobalConfirmation
+        
     Write-Verbose "Trust PSGallery"
     Get-PackageProvider -Name NuGet -ForceBootstrap
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
@@ -188,7 +190,7 @@ Function Chocobox {
     Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -AlwaysShowIconsOn
     
     Write-Verbose "Install software with chocolatey"
-    choco upgrade sysinternals screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
+    choco upgrade volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
 
 	#	Enable Remote Desktop
 	Enable-RemoteDesktop
