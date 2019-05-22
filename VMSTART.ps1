@@ -108,6 +108,8 @@ Function PowerSettings {
 	powercfg /hibernate off
 
 }
+
+}
 Function RemoveApps {
 	$SafeApps = "sechealth|secureas|desktopappinstaller|net.native|vclibs|oobenet|xaml"
 	If ($Xbox) {
@@ -533,7 +535,7 @@ Function RegSetMachine {
 
 #Clean up the default start menu    
 Function ClearStartMenu {
-    If ($ClearStart) {
+   # If ($ClearStart) {
 		Write-Host "***Setting empty start menu for new profiles...***"
 #Don't edit this. Creates empty start menu if -ClearStart is used.
         $StartLayoutStr = @"
@@ -550,14 +552,14 @@ Function ClearStartMenu {
 	    add-content $Env:TEMP\startlayout.xml $StartLayoutStr
         import-startlayout -layoutpath $Env:TEMP\startlayout.xml -mountpath $Env:SYSTEMDRIVE\
         remove-item $Env:TEMP\startlayout.xml
-}    Else {        
-		Write-Host "***Setting clean start menu for new profiles...***"
+#}    Else {        
+#		Write-Host "***Setting clean start menu for new profiles...***"
 #Custom start layout XML near the top of the script.
-
-        add-content $Env:TEMP\startlayout.xml $StartLayoutStr
-        import-startlayout -layoutpath $Env:TEMP\startlayout.xml -mountpath $Env:SYSTEMDRIVE\
-        remove-item $Env:TEMP\startlayout.xml
-}
+#
+#        add-content $Env:TEMP\startlayout.xml $StartLayoutStr
+#        import-startlayout -layoutpath $Env:TEMP\startlayout.xml -mountpath $Env:SYSTEMDRIVE\
+#        remove-item $Env:TEMP\startlayout.xml
+#}
 }
 
 
@@ -565,8 +567,11 @@ Function ClearStartMenu {
 Function Goodbye {
     Write-Host "*******Configuration complete.*******"
 	Write-Host "*******Remember to set your execution policy back!  Set-Executionpolicy restricted is the Windows 10 default.*******"
-    Write-Host "*******Rebooting your computer now!*******"     
-    shutdown /r /t 1
+	Add-Type -AssemblyName System.speech
+		$tts= New-Object System.Speech.Synthesis.SpeechSynthesizer
+		$tts.Speak('Installation complete! Restarting computer.')
+	Write-Host "*******Rebooting your computer now!*******"     
+    Restart-Computer
 }
 
 #---End of functions---
@@ -589,6 +594,7 @@ If ($AppsOnly) {
     ClearStartMenu
     Goodbye
 }Else {
+	
 	PowerSettings
 	RemoveApps
     DisableTasks
