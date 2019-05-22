@@ -569,7 +569,7 @@ Function Goodbye {
 		$tts= New-Object System.Speech.Synthesis.SpeechSynthesizer
 		$tts.Speak('Installation complete! Restarting computer.')
 	Write-Host "*******Rebooting your computer now!*******"     
-    Restart-Computer
+    Restart-Computer -force
 }
 
 #---End of functions---
