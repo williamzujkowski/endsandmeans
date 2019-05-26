@@ -11,7 +11,7 @@ Function InstallSoftware()
 }
 
 function CompatibilityChecks()
- {
+ { # Start CompatibilityChecks
   
     # Check to make sure host is supported
     Write-Host "[+] Checking to make sure Operating System is compatible"
@@ -44,7 +44,7 @@ function CompatibilityChecks()
     {
       Write-Host "`t> At least 60 GB of disk space detected, finding other reasons to flunk you .." -ForegroundColor Green
     }
-}
+} # End CompatibilityChecks
   
     <# Prompt user to remind them to take a snapshot
     Write-Host  ""
@@ -63,7 +63,7 @@ function CompatibilityChecks()
 #>
 
 function ConfigureRepos()
-{
+{ # Start ConfigureRepos
     <#
 .SYNOPSIS
 Trust repositories for installing modules with "install-package"
@@ -73,13 +73,13 @@ Write-Host "Trusting PSGallery and installing Modules"
 Write-Host  ""
 Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 Write-Host "PSGallery Successfully Added."
-}
+} # End ConfigureRepos
 
 function Dependencies()
-{
+{ # Start Dependencies
 Write-Host "Installing Modules.."
 mkdir -p 'c:\temp' | Out-Null
-Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/williamzujkowski/Win10-Setup-Functions/master/Win10.psm1' -Outfile 'C:\temp\Win10.psm1'
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/williamzujkowski/endsandmeans/master/Win10.psm1' -Outfile 'C:\temp\Win10.psm1'
    Write-Host "Trying to import Win10 Debloat after download"
    Import-Module 'C:\TEMP\Win10.psm1'
    Write-Host "  Win10 Debloat DOWNLOADED and installed"
@@ -89,20 +89,20 @@ Write-Host "The following modules are currently installed:"
 Write-Host ""
 Get-Module
 Write-Host ""
-}
+} # End Dependencies
 
 
 function DEBLOAT()
-{
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/williamzujkowski/commando-vm/master/commandovm.win10.preconfig.fireeye/tools/Default.preset'))
+{ # Start DEBLOAT
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/williamzujkowski/endsandmeans/master/debloat.config'))
 Write-Host ""
 Write-Ascii " DEBLOAT Complete!!"
 # $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 
-}
+} # End DEBLOAT
 
 function InstallBoxstarter()
-{
+{ # Start InstallBoxstarter
   <#
   .SYNOPSIS
   Install BoxStarter on the current system  
@@ -161,10 +161,10 @@ function InstallBoxstarter()
   [System.Net.ServicePointManager]::SecurityProtocol = $prevSecProtocol
   [System.Net.ServicePointManager]::CertificatePolicy = $prevCertPolicy
   return $true
-}
+} # End InstallBoxstarter
 
 function PowerSettings()
-{
+{ # Start PowerSettings
   # Tweak power options to prevent installs from timing out
   & powercfg -change -monitor-timeout-ac 0 | Out-Null
   & powercfg -change -monitor-timeout-dc 0 | Out-Null
@@ -174,7 +174,7 @@ function PowerSettings()
   & powercfg -change -standby-timeout-dc 0 | Out-Null
   & powercfg -change -hibernate-timeout-ac 0 | Out-Null
   & powercfg -change -hibernate-timeout-dc 0 | Out-Null
-}
+} # End PowerSettings
 
 # ---------------------------------------------
 #
@@ -221,13 +221,7 @@ else
  
 # Run your code that needs to be elevated here
     Write-Host "This script requires elevation, and we're sorted now!"
-<#    
-    Write-Host  ""
-    Write-Host ".. press any key to continue..."
-    Write-Host  ""
-    Write-Host  ""
-    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-#>
+
 Set-ExecutionPolicy unrestricted
     Write-Host "Execution Policy set to unrestricted"
 
