@@ -3,7 +3,7 @@ Function InstallSoftware()
 {
  Install-WindowsUpdate -Full   
  
- Write-Ascii "Installing software.."
+ Write-Host "Installing software.."
  
  choco ConEmu posh upgrade volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
    
@@ -108,7 +108,7 @@ function DEBLOAT()
 { # Start DEBLOAT
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/williamzujkowski/endsandmeans/master/debloat.config'))
 Write-Host ""
-Write-Ascii " DEBLOAT Complete!!"
+Write-Host " DEBLOAT Complete!!"
 # $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 
 } # End DEBLOAT
