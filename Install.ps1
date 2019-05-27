@@ -5,7 +5,7 @@ Function InstallSoftware()
  
  Write-Host "Installing software.."
  
- choco ConEmu posh upgrade volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
+ choco Conemu posh upgrade volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
    
      
 }
@@ -46,22 +46,6 @@ function CompatibilityChecks()
     }
 } # End CompatibilityChecks
   
-    <# Prompt user to remind them to take a snapshot
-    Write-Host  ""
-    Write-Host "[-] Do you need to take a snapshot before continuing? Y/N " -ForegroundColor Yellow -NoNewline
-    $response = Read-Host
-    if ($response -ne "N") {
-        Write-Host  ""
-        Write-Host "[*] Kicking you out to make up for your lack of caution..." -ForegroundColor Red
-      exit
-    }
-    Write-Host  ""
-    Write-Host "Good job so far!" -ForegroundColor Green
-    Write-Host  ""
-  }
-
-#>
-
 function ConfigureRepos()
 { # Start ConfigureRepos
     <#
@@ -85,10 +69,14 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/williamzujkowski/endsa
    Write-Host "  Win10 Debloat DOWNLOADED and installed"
    # Installing NuGet here to avoid prompting later
    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+   Write-Host ""
+   Write-Host "NuGet Installed..."
    # posh-git is a PowerShell module that integrates Git and PowerShell https://github.com/dahlbyk/posh-git
+   Write-Host "Posh-Git Installed"
    Install-Module posh-git
    # A theme engine for Powershell in ConEmu --  https://github.com/JanDeDobbeleer/oh-my-posh
    Install-Module oh-my-posh
+   Write-Host "oh-my-posh installed..."
 
 Write-Host ""
 Write-Host "The following modules are currently installed:"
@@ -166,16 +154,6 @@ function InstallBoxstarter()
     choco feature enable -n allowGlobalConfirmation
     choco upgrade boxstarter
   
-  # Boxstarter options
-    $Boxstarter.RebootOk=$true 
-    # Is this a machine with no login password?
-    $Boxstarter.NoPassword=$false 
-    # Save my password securely and auto-login after a reboot
-    $Boxstarter.AutoLogin=$true 
-
-  # Download and install boxstarter
-  #Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://boxstarter.org/bootstrapper.ps1'));
-  #	C:\ProgramData\chocolatey\lib\boxstarter.chocolatey.2.12.0\tools\Boxstarter.Chocolatey 	 get-boxstarter -Force
   # Restore previous trust settings for this PowerShell session
   # Note: SSL certs trusted from installing BoxStarter above will be trusted for the remaining PS session
   [System.Net.ServicePointManager]::SecurityProtocol = $prevSecProtocol
@@ -269,10 +247,3 @@ Start-Sleep -Milliseconds 500
     InstallSoftware
     SetTheme
     Goodbye
-    <# 
-	RemoveApps
-    DisableTasks
-    DisableServices
-    RegChange
-    ClearStartMenu
-    #>
