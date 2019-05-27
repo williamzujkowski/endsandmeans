@@ -7,24 +7,15 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw
 
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                  _                         _
-  ___  _ __    __| | ___   __ _  _ __    __| | _ __ ___    ___   __ _  _ __   ___
- / _ \| '_ \  / _` |/ __| / _` || '_ \  / _` || '_ ` _ \  / _ \ / _` || '_ \ / __|
-|  __/| | | || (_| |\__ \| (_| || | | || (_| || | | | | ||  __/| (_| || | | |\__ \
- \___||_| |_| \__,_||___/ \__,_||_| |_| \__,_||_| |_| |_| \___| \__,_||_| |_||___/
 
+    ENDSANDMEANS
 
-  .SYNOPSIS A Windows 10 post imaging script 
+    .SYNOPSIS A Windows 10 post imaging script 
   
-  Written by: William Zujowski 
-  Update: 5-27-2019
-  https://github.com/williamzujkowski/endsandmeans
+    Written by: William Zujowski 
+    Update: 5-27-2019
+    https://github.com/williamzujkowski/endsandmeans
 
-  -- Removes Telemetry, Cortana, and other Bloat autoamtically
-  -- Installs Chocolatey for package management and a bunch useful software
-  -- Installs Windows Updates
-  -- 
 
 
     CompatibilityChecks ensures the system has enough room and other prereqs for running this script
@@ -37,5 +28,4 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw
     SetTheme            Disabled for testing -- Adjusts default Theme in powershell
     Goodbye             End of script
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++    
 
