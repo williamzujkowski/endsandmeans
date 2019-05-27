@@ -27,7 +27,7 @@
     DEBLOAT             removes commonly unwanted Windows 10 defaults .. Adjust this in the debloat.config    
     InstallSoftware     Installs softare .. feel free to edit what it installs!
     SetTheme            Disabled for testing -- Adjusts default Theme in powershell
-    Goodbye             End of script
+    
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++    
     
@@ -282,4 +282,3 @@ Start-Sleep -Milliseconds 500
     DEBLOAT
     InstallSoftware
     # SetTheme - Disabled for testing
-    Goodbye
