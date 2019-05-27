@@ -7,7 +7,6 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw
 
 
 
-<#
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                   _                         _
   ___  _ __    __| | ___   __ _  _ __    __| | _ __ ___    ___   __ _  _ __   ___
@@ -39,5 +38,4 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw
     Goodbye             End of script
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++    
-    
-#>
+
