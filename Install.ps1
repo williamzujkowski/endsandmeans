@@ -5,7 +5,7 @@ Function InstallSoftware()
  
  Write-Ascii "Installing software.."
  
- choco upgrade volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
+ choco ConEmu posh upgrade volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
    
      
 }
@@ -83,7 +83,10 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/williamzujkowski/endsa
    Write-Host "Trying to import Win10 Debloat after download"
    Import-Module 'C:\TEMP\Win10.psm1'
    Write-Host "  Win10 Debloat DOWNLOADED and installed"
-
+   #
+   Install-Module posh-git -Scope CurrentUser
+   # A theme engine for Powershell in ConEmu --  https://github.com/JanDeDobbeleer/oh-my-posh
+   Install-Module oh-my-posh
 Write-Host ""
 Write-Host "The following modules are currently installed:"
 Write-Host ""
@@ -91,6 +94,12 @@ Get-Module
 Write-Host ""
 } # End Dependencies
 
+function SetTheme ()
+{ # Start SetTheme
+  if (!(Test-Path -Path $PROFILE )) { New-Item -Type File -Path $PROFILE -Force }
+  Add-Content $PROFILE ( "Import-Module posh-git `nAddImport-Module oh-my-posh `nSet-Theme Paradox")
+  
+}
 
 function DEBLOAT()
 { # Start DEBLOAT
@@ -153,6 +162,14 @@ function InstallBoxstarter()
   # Choco config prior to install
     choco feature enable -n allowGlobalConfirmation
     choco upgrade boxstarter
+  
+  # Boxstarter options
+    $Boxstarter.RebootOk=$true 
+    # Is this a machine with no login password?
+    $Boxstarter.NoPassword=$false 
+    # Save my password securely and auto-login after a reboot
+    $Boxstarter.AutoLogin=$true 
+
   # Download and install boxstarter
   #Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://boxstarter.org/bootstrapper.ps1'));
   #	C:\ProgramData\chocolatey\lib\boxstarter.chocolatey.2.12.0\tools\Boxstarter.Chocolatey 	 get-boxstarter -Force
@@ -247,6 +264,7 @@ Start-Sleep -Milliseconds 500
     InstallBoxstarter
     DEBLOAT
     InstallSoftware
+    SetTheme
     Goodbye
     <# 
 	RemoveApps
