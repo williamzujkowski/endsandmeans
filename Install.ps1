@@ -83,10 +83,13 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/williamzujkowski/endsa
    Write-Host "Trying to import Win10 Debloat after download"
    Import-Module 'C:\TEMP\Win10.psm1'
    Write-Host "  Win10 Debloat DOWNLOADED and installed"
-   #
-   Install-Module posh-git -Scope CurrentUser
+   # Installing NuGet here to avoid prompting later
+   Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+   # posh-git is a PowerShell module that integrates Git and PowerShell https://github.com/dahlbyk/posh-git
+   Install-Module posh-git
    # A theme engine for Powershell in ConEmu --  https://github.com/JanDeDobbeleer/oh-my-posh
    Install-Module oh-my-posh
+
 Write-Host ""
 Write-Host "The following modules are currently installed:"
 Write-Host ""
