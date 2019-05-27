@@ -5,7 +5,7 @@ Function InstallSoftware()
  
  Write-Host "Installing software.."
  
- choco Conemu posh upgrade volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
+ choco upgrade Conemu posh volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
    
      
 }
