@@ -17,14 +17,28 @@ To install, copy and paste the following into a powershell prompt on the target 
     https://github.com/williamzujkowski/endsandmeans
 
 
-    **Function Name**       |   What it does
-                         ---|---
-    **CompatibilityChecks** |   ensures the system has enough room and other prereqs for running this script
-    **PowerSettings**       |   ensure the system stays awake during installs
-    **ConfigureRepos**      |   is used to add powershell gallery and other useful package sources
-    **Dependencies**        |   installs needed tools and modules prior to debloating and installing software
-    **InstallChocolatey**   |   installs chocolatey
-    **DEBLOAT**             |   removes commonly unwanted Windows 10 defaults .. Adjust this in the debloat.config    
-    **InstallSoftware**     |   Installs softare .. feel free to edit what it installs!
-    **SetTheme**            |   Disabled for testing -- Adjusts default Theme in powershell
-    **Goodbye**             |   End of script
+    |        |    |
+    |--------|-------- |
+    |**CompatibilityChecks** |   ensures the system has enough room and other prereqs for running this script|
+    |**PowerSettings**       |   ensure the system stays awake during installs |
+    |**ConfigureRepos**      |   is used to add powershell gallery and other useful package sources |
+    |**Dependencies**        |   installs needed tools and modules prior to debloating and installing software |
+    |**InstallChocolatey**   |   installs chocolatey |
+    |**DEBLOAT**             |   removes commonly unwanted Windows 10 defaults .. Adjust this in the debloat.config    |
+    |**InstallSoftware**     |   Installs softare .. feel free to edit what it installs |
+    |**SetTheme**            |   Disabled for testing -- Adjusts default Theme in powershell |
+    |**Goodbye**             |   End of script |
+
+
+| Function | Effect |
+| ------------ | ------------- |
+| **CompatibilityChecks** |   ensures the system has enough room and other prereqs for running this script|
+| **PowerSettings**       |   ensure the system stays awake during installs |
+| **ConfigureRepos**      |   is used to add powershell gallery and other useful package sources |
+| **Dependencies**        |   installs needed tools and modules prior to debloating and installing software |
+| **InstallChocolatey**   |   installs chocolatey |
+| **DEBLOAT**             |   removes commonly unwanted Windows 10 defaults .. Adjust this in the debloat.config    |
+| **InstallSoftware**     |   Installs softare .. feel free to edit what it installs |
+| **SetTheme**            |   Disabled for testing -- Adjusts default Theme in powershell |
+| **Goodbye**             |   End of script |
+
