@@ -1,12 +1,44 @@
+<#
+     _ __ ___   _ __     ____   (_) _ __   ___ | |_   __ _ | || |  ___  _ __
+    | '_ ` _ \ | '__|   |_  /   | || '_ \ / __|| __| / _` || || | / _ \| '__|
+    | | | | | || |       / /    | || | | |\__ \| |_ | (_| || || ||  __/| |
+    |_| |_| |_||_|      /___|   |_||_| |_||___/ \__| \__,_||_||_| \___||_|
+
+  .SYNOPSIS A Windows 10 post imaging script 
+  
+  Written by: William Zujowski 
+  Update: 5-27-2019
+  https://github.com/williamzujkowski/endsandmeans
+
+  -- Removes Telemetry, Cortana, and other Bloat autoamtically
+  -- Installs Chocolatey for package management and a bunch useful software
+  -- Installs Windows Updates
+  -- 
+
+
+    CompatibilityChecks ensures the system has enough room and other prereqs for running this script
+    PowerSettings       ensure the system stays awake during installs
+    ConfigureRepos      is used to add powershell gallery and other useful package sources
+    Dependencies        installs needed tools and modules prior to debloating and installing software
+    InstallChocolatey   installs chocolatey
+    DEBLOAT             removes commonly unwanted Windows 10 defaults .. Adjust this in the debloat.config    
+    InstallSoftware     Installs softare .. feel free to edit what it installs!
+    SetTheme            Disabled for testing -- Adjusts default Theme in powershell
+    Goodbye             End of script
+
+    
+#>
+
 
 Function InstallSoftware()
 {
- Install-WindowsUpdate -Full   
+    
  
  Write-Host "Installing software.."
  
  choco upgrade Conemu volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
-   
+
+ Install-WindowsUpdate -Full
      
 }
 
@@ -87,8 +119,8 @@ Write-Host ""
 
 function SetTheme ()
 { # Start SetTheme
-  if (!(Test-Path -Path $PROFILE )) { New-Item -Type File -Path $PROFILE -Force }
-  Add-Content $PROFILE ( "Import-Module posh-git `nAddImport-Module oh-my-posh `nSet-Theme Paradox")
+  if (!(Test-Path -Path $PROFILE )) { New-Item -Type File -Path $PROFILE -Force };
+  Add-Content $PROFILE ( "Import-Module posh-git `nImport-Module oh-my-posh `nSet-Theme Paradox")
   
 }
 
@@ -101,15 +133,15 @@ Write-Host " DEBLOAT Complete!!"
 
 } # End DEBLOAT
 
-function InstallBoxstarter()
-{ # Start InstallBoxstarter
+function InstallChocolatey()
+{ # Start InstallChocolatey
   <#
   .SYNOPSIS
   Install BoxStarter on the current system  
   .DESCRIPTION
-  Install BoxStarter on the current system. Returns $true or $false to indicate success or failure. On
+  Install Chocolatey on the current system. Returns $true or $false to indicate success or failure. On
   fresh windows 7 systems, some root certificates are not installed and updated properly. Therefore,
-  this funciton also temporarily trusts all certificates before installing BoxStarter.  
+  this funciton also temporarily trusts all certificates before installing Chocolatey.  
   #>  
 
   # https://stackoverflow.com/questions/11696944/powershell-v3-invoke-webrequest-https-error
@@ -143,7 +175,7 @@ function InstallBoxstarter()
   }  
   $prevSecProtocol = [System.Net.ServicePointManager]::SecurityProtocol
   $prevCertPolicy = [System.Net.ServicePointManager]::CertificatePolicy  
-  Write-Host "[ * ] Installing Boxstarter"
+  Write-Host "[ * ] Installing Chocolatey"
   # Become overly trusting
   [System.Net.ServicePointManager]::SecurityProtocol = $AllProtocols
   [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy  
@@ -155,11 +187,11 @@ function InstallBoxstarter()
     choco upgrade boxstarter
   
   # Restore previous trust settings for this PowerShell session
-  # Note: SSL certs trusted from installing BoxStarter above will be trusted for the remaining PS session
+  # Note: SSL certs trusted from installing Chocolatey above will be trusted for the remaining PS session
   [System.Net.ServicePointManager]::SecurityProtocol = $prevSecProtocol
   [System.Net.ServicePointManager]::CertificatePolicy = $prevCertPolicy
   return $true
-} # End InstallBoxstarter
+} # End InstallChocolatey
 
 function PowerSettings()
 { # Start PowerSettings
@@ -242,8 +274,8 @@ Start-Sleep -Milliseconds 500
     PowerSettings
     ConfigureRepos
     Dependencies
-    InstallBoxstarter
+    InstallChocolatey
     DEBLOAT
     InstallSoftware
-    SetTheme
+    # SetTheme - Disabled for testing
     Goodbye
