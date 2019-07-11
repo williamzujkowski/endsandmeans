@@ -78,7 +78,7 @@ function CompatibilityChecks()
     }
     else
     {
-      Write-Host "`t> At least 60 GB of disk space detected, finding other reasons to flunk you .." -ForegroundColor Green
+      Write-Host "`t> At least 20 GB of disk space detected, finding other reasons to flunk you .." -ForegroundColor Green
     }
 } # End CompatibilityChecks
   
