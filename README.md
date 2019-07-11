@@ -1,5 +1,6 @@
-Powershell script to configure Windows 10 1809 VMs for faster spin up.
+Powershell script to configure Windows 10 VMs for faster spin up.
 
+As always, don't blindly copy and paste commands from the internet without knowing what they do or using a system you don't mind reimaging or restoring!
 
 To install, copy and paste the following into a powershell prompt on the target machine:
 
