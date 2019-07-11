@@ -70,7 +70,7 @@ function CompatibilityChecks()
     Write-Host  ""
     $disk = Get-PSDrive C
     Start-Sleep -Seconds 1
-    if (-Not (($disk.used + $disk.free)/1GB -gt 49.5)){
+    if (-Not (($disk.used + $disk.free)/1GB -gt 49)){
       Write-Host "`t[ERR] This install requires a minimum 50 GB of free space, please increase disk space to continue`n" -ForegroundColor Red
       Read-Host "Press any key to continue"
       Write-Host  ""
