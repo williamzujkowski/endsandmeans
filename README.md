@@ -14,7 +14,7 @@ To install, copy and paste the following into a powershell prompt on the target 
     .SYNOPSIS A Windows 10 post imaging script 
   
     Written by: William Zujowski 
-    Update: 5-27-2019
+    Update: 8-2-2019
     https://github.com/williamzujkowski/endsandmeans
 
 | Function | Effect |
