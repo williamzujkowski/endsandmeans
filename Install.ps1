@@ -78,7 +78,8 @@ function CompatibilityChecks()
     }
     else
     {
-      Write-Host "`t> At least 20 GB of disk space detected, finding other reasons to flunk you .." -ForegroundColor Green
+      Write-Host "`t> At least 20 GB of disk space detected, that should be enough .." -ForegroundColor Green
+      Write-Host  ""
     }
 } # End CompatibilityChecks
   
@@ -89,7 +90,7 @@ function ConfigureRepos()
 Trust repositories for installing modules with "install-package"
 #>
 
-Write-Host "Trusting PSGallery and installing Modules"
+Write-Host "[+] Trusting PSGallery and installing Modules"
 Write-Host  ""
 Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 Write-Host "PSGallery Successfully Added."
@@ -97,7 +98,8 @@ Write-Host "PSGallery Successfully Added."
 
 function Dependencies()
 { # Start Dependencies
-Write-Host "Installing Modules.."
+Write-Host "[+] Installing Modules.."
+Write-Host ""
 mkdir -p 'c:\temp' | Out-Null
 Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/williamzujkowski/endsandmeans/master/Win10.psm1' -Outfile 'C:\temp\Win10.psm1'
    Write-Host "Trying to import Win10 Debloat after download"
@@ -130,9 +132,12 @@ function SetTheme ()
 
 function DEBLOAT()
 { # Start DEBLOAT
+Write-Host "[+] Starting DEBLOAT process"
+Write-Host ""
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/williamzujkowski/endsandmeans/master/debloat.config'))
 Write-Host ""
 Write-Host " DEBLOAT Complete!!"
+Write-Host ""
 # $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 
 } # End DEBLOAT
