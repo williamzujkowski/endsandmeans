@@ -10,7 +10,7 @@
   .SYNOPSIS A Windows 10 post imaging script 
   
   Written by: William Zujowski 
-  Update: 5-27-2019
+  Update: 8-20-2019
   https://github.com/williamzujkowski/endsandmeans
 
   -- Removes Telemetry, Cortana, and other Bloat autoamtically
@@ -94,6 +94,11 @@ Write-Host "[+] Trusting PSGallery and installing Modules"
 Write-Host  ""
 Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 Write-Host "PSGallery Successfully Added."
+Write-Host  ""
+Write-Host  "[+] Installing NuGet"
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+Write-Host  ""
+Write-Host "NuGet Successfully Added."
 } # End ConfigureRepos
 
 function Dependencies()
