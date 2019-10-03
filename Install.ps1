@@ -42,7 +42,7 @@ Function InstallSoftware()
  
  choco upgrade Conemu volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
 
- Install-WindowsUpdate -Full
+# Install-WindowsUpdate -Full
      
 }
 
