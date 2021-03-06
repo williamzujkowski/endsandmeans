@@ -159,8 +159,8 @@ function InstallChocolatey()
   # Choco config prior to software installs
     choco feature enable -n allowGlobalConfirmation
       
-  } # End InstallChocolatey
-}
+ } # End InstallChocolatey
+
 
 function PowerSettings()
 { # Start PowerSettings
