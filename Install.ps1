@@ -40,7 +40,7 @@ Function InstallSoftware()
  
  Write-Host "Installing software.."
  
- choco upgrade volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
+ cup volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
 
 # Install-WindowsUpdate -Full
      
@@ -137,7 +137,7 @@ function SetTheme ()
 
 function DEBLOAT()
 { # Start DEBLOAT
-Write-Host "[+] Starting DEBLOAT process"
+Write-Host "[ + ] Starting DEBLOAT process"
 Write-Host ""
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/williamzujkowski/endsandmeans/master/debloat.config'))
 Write-Host ""
@@ -149,67 +149,27 @@ Write-Host ""
 
 function InstallChocolatey()
 { # Start InstallChocolatey
-  <#
-  .SYNOPSIS
-  Install BoxStarter on the current system  
-  .DESCRIPTION
-  Install Chocolatey on the current system. Returns $true or $false to indicate success or failure. On
-  fresh windows 7 systems, some root certificates are not installed and updated properly. Therefore,
-  this funciton also temporarily trusts all certificates before installing Chocolatey.  
-  #>  
-
-  # https://stackoverflow.com/questions/11696944/powershell-v3-invoke-webrequest-https-error
-  # Allows current PowerShell session to trust all certificates
-  # Also a good find: https://www.briantist.com/errors/could-not-establish-trust-relationship-for-the-ssltls-secure-channel/
-
-  try {
-  Add-Type @"
-  using System.Net;
-  using System.Security.Cryptography.X509Certificates;
-  public class TrustAllCertsPolicy : ICertificatePolicy {
-  	public bool CheckValidationResult(
-  		ServicePoint srvPoint, X509Certificate certificate,
-  		WebRequest request, int certificateProblem) {
-  		return true;
-  	}
-  }
-"@
-  } catch {
-    Write-Debug "Failed to add new type"
-  }  
-  try {
-  	$AllProtocols = [System.Net.SecurityProtocolType]'Ssl3,Tls,Tls11,Tls12'
-  } catch {
-  	Write-Debug "Failed to find SSL type...1"
-  }  
-  try {
-  	$AllProtocols = [System.Net.SecurityProtocolType]'Ssl3,Tls'
-  } catch {
-  	Write-Debug "Failed to find SSL type...2"
-  }  
-  $prevSecProtocol = [System.Net.ServicePointManager]::SecurityProtocol
-  $prevCertPolicy = [System.Net.ServicePointManager]::CertificatePolicy  
+  
   Write-Host "[ * ] Installing Chocolatey"
-  # Become overly trusting
-  [System.Net.ServicePointManager]::SecurityProtocol = $AllProtocols
-  [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy  
+
 
   # Download and install latest Chocolatey
-  Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-  # Choco config prior to install
-    choco feature enable -n allowGlobalConfirmation
-    choco upgrade boxstarter
+  Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
   
-  # Restore previous trust settings for this PowerShell session
-  # Note: SSL certs trusted from installing Chocolatey above will be trusted for the remaining PS session
-  [System.Net.ServicePointManager]::SecurityProtocol = $prevSecProtocol
-  [System.Net.ServicePointManager]::CertificatePolicy = $prevCertPolicy
-  return $true
-} # End InstallChocolatey
+  # Choco config prior to software installs
+    choco feature enable -n allowGlobalConfirmation
+      
+  } # End InstallChocolatey
+}
 
 function PowerSettings()
 { # Start PowerSettings
   # Tweak power options to prevent installs from timing out
+  Write-Host "[ * ] Adjusting Power Settings on" $env:computername -ForegroundColor Magenta -NoNewline
+  Write-Host  ""
+  Write-Host  ""
+  Start-Sleep -Milliseconds 500 
+  
   & powercfg -change -monitor-timeout-ac 0 | Out-Null
   & powercfg -change -monitor-timeout-dc 0 | Out-Null
   & powercfg -change -disk-timeout-ac 0 | Out-Null
@@ -224,7 +184,6 @@ function InstallPowerStig()
 {
   Install-Module PowerSTIG -Scope CurrentUser
 }
-
 
 # ---------------------------------------------
 #
