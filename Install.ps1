@@ -224,7 +224,7 @@ function InstallPowerStig()
 {
   Install-Module PowerSTIG -Scope CurrentUser
   configuration Windows10
-{
+  {
     param
     (
         [parameter()]
@@ -245,10 +245,9 @@ function InstallPowerStig()
         }
     }
 
-  }
+  }  
   Windows10 
 }
-
 
 # ---------------------------------------------
 #
