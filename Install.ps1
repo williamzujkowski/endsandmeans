@@ -40,7 +40,7 @@ Function InstallSoftware()
  
  Write-Host "Installing software.."
  
- choco upgrade Conemu volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable cmder Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
+ choco upgrade volatility sysinternals rawcopy screentogif vscode markdownmonster googlechrome x64dbg.portable Hashcheck nmap ida-free fiddler pester packer winscp processhacker yed pesieve baretail wireshark lessmsi putty notepadplusplus 7zip -y
 
 # Install-WindowsUpdate -Full
      
@@ -220,6 +220,36 @@ function PowerSettings()
   & powercfg -change -hibernate-timeout-dc 0 | Out-Null
 } # End PowerSettings
 
+function InstallPowerStig() 
+{
+  Install-Module PowerSTIG -Scope CurrentUser
+  configuration Windows10
+{
+    param
+    (
+        [parameter()]
+        [string]
+        $NodeName = 'localhost'
+    )
+
+    Import-DscResource -ModuleName PowerStig
+
+    Node $NodeName
+    {
+        WindowsClient BaseLine
+        {
+            OsVersion   = '10'
+            OsRole      = 'MS'
+            StigVersion = '2.1'
+            
+        }
+    }
+
+  }
+  Windows10 
+}
+
+
 # ---------------------------------------------
 #
 #   THIS IS THE BEGINNING OF THE WHOLE THING
@@ -271,13 +301,8 @@ Set-ExecutionPolicy unrestricted
 
 # Announce script kick off.
 Start-Sleep -Milliseconds 500
-    Write-Host "Now lets " -ForegroundColor Magenta -NoNewline
-    Start-Sleep -Milliseconds 500
-    Write-Host "    pwn " -ForegroundColor Cyan -NoNewline
-    Start-Sleep -Milliseconds 500
-    Write-Host "    this " -ForegroundColor Green -NoNewline
-    Start-Sleep -Milliseconds 500
-    Write-Host "    box!!!!!! " -ForegroundColor Red
+    Write-Host "Configuring" $env:computername -ForegroundColor Magenta -NoNewline
+  
     Write-Host  ""
     Write-Host  ""
     Start-Sleep -Milliseconds 500  
@@ -291,4 +316,5 @@ Start-Sleep -Milliseconds 500
     InstallChocolatey
     DEBLOAT
     InstallSoftware
+    InstallPowerStig
     # SetTheme - Disabled for testing
