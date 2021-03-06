@@ -232,8 +232,6 @@ function InstallPowerStig()
         $NodeName = 'localhost'
     )
 
-    Import-DscResource -ModuleName PowerStig
-
     Node $NodeName
     {
         WindowsClient BaseLine
