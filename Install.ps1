@@ -223,29 +223,32 @@ function PowerSettings()
 function InstallPowerStig() 
 {
   Install-Module PowerSTIG -Scope CurrentUser
-  configuration Windows10
-  {
-    param
-    (
-        [parameter()]
-        [string]
-        $NodeName = 'localhost'
-    )
-
-    Node $NodeName
-    {
-        WindowsClient BaseLine
-        {
-            OsVersion   = '10'
-            OsRole      = 'MS'
-            StigVersion = '2.1'
-            
-        }
-    }
-
-  }  
-  Windows10 
 }
+
+<#
+configuration Windows10
+{
+  param
+  (
+      [parameter()]
+      [string]
+      $NodeName = 'localhost'
+  )
+
+  Node $NodeName
+  {
+      WindowsClient BaseLine
+      {
+          OsVersion   = '10'
+          OsRole      = 'MS'
+          StigVersion = '2.1'
+          
+      }
+  }
+
+}  
+Windows10 
+#>
 
 # ---------------------------------------------
 #
