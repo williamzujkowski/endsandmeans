@@ -95,10 +95,18 @@ Write-Host  ""
 Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 Write-Host "PSGallery Successfully Added."
 Write-Host  ""
-Write-Host  "[+] Installing NuGet"
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-Write-Host  ""
-Write-Host "NuGet Successfully Added."
+# Installing NuGet here to avoid prompting later
+  Write-Host  "[+] Installing NuGet"
+  Install-Module -Name NuGet
+  Write-Host  ""
+  Write-Host "NuGet Successfully Added."
+  # posh-git is a PowerShell module that integrates Git and PowerShell https://github.com/dahlbyk/posh-git
+  Write-Host "Posh-Git Installed"
+  Install-Module posh-git
+  # A theme engine for Powershell in ConEmu --  https://github.com/JanDeDobbeleer/oh-my-posh
+  Install-Module oh-my-posh
+  Write-Host "oh-my-posh installed..."
+  
 } # End ConfigureRepos
 
 function Dependencies()
@@ -107,25 +115,14 @@ Write-Host "[+] Installing Modules.."
 Write-Host ""
 mkdir -p 'c:\temp' | Out-Null
 Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/williamzujkowski/endsandmeans/master/Win10.psm1' -Outfile 'C:\temp\Win10.psm1'
-   Write-Host "Trying to import Win10 Debloat after download"
-   Import-Module 'C:\TEMP\Win10.psm1'
-   Write-Host "  Win10 Debloat DOWNLOADED and installed"
-   # Installing NuGet here to avoid prompting later
-   Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-   Write-Host ""
-   Write-Host "NuGet Installed..."
-   # posh-git is a PowerShell module that integrates Git and PowerShell https://github.com/dahlbyk/posh-git
-   Write-Host "Posh-Git Installed"
-   Install-Module posh-git
-   # A theme engine for Powershell in ConEmu --  https://github.com/JanDeDobbeleer/oh-my-posh
-   Install-Module oh-my-posh
-   Write-Host "oh-my-posh installed..."
-
-Write-Host ""
-Write-Host "The following modules are currently installed:"
-Write-Host ""
-Get-Module
-Write-Host ""
+  Write-Host "Trying to import Win10 Debloat after download"
+  Import-Module 'C:\TEMP\Win10.psm1'
+  Write-Host "  Win10 Debloat DOWNLOADED and installed"
+    Write-Host ""
+  Write-Host "The following modules are currently installed:"
+  Write-Host ""
+  Get-Module
+  Write-Host ""
 } # End Dependencies
 
 function SetTheme ()
